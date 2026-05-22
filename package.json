@@ -1,0 +1,26 @@
+{
+  "name": "rms-playwright-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright automation framework for ERP workflows such as products, purchase, sales, and inventory.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:products": "playwright test tests/products",    
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.8.0",
+    "typescript": "^5.8.3"
+  },
+  "main": "playwright.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
