@@ -4,6 +4,11 @@ module.exports = defineConfig({
   timeout: 30000, // 2 minutes per test
   fullyParallel: false,
   workers: 1,
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }]
+  ],
+
   use: {
     baseURL: 'https://upcoming-stage.palletnow.co',
     browserName: 'chromium',
