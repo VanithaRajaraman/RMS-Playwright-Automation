@@ -7,7 +7,7 @@ module.exports = defineConfig({
   use: {
     baseURL: 'https://upcoming-stage.palletnow.co',
     browserName: 'chromium',
-    headless: false,
+    headless: true,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 30000, // 1 minute per click/fill/etc.
