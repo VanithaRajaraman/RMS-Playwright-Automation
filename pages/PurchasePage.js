@@ -92,7 +92,7 @@ await this.page.getByText('Vanitha 2 Pallet', { exact: true }).click();
 
     // Invoice amount
     await this.page.getByRole('spinbutton').first().click();
-    await this.page.getByRole('spinbutton').first().fill('164');
+    await this.page.getByRole('spinbutton').first().fill('139');
 
     // Select buyer
     await this.page.getByText('Select...').click();
