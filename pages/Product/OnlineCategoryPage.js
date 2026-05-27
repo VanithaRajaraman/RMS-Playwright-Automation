@@ -1,9 +1,17 @@
 class OnlineCategoryPage {
   constructor(page) {
     this.page = page;
-    this.levelOneName = 'Fish L1C';
-    this.levelTwoName = 'Fish L2B';
-    this.levelThreeName = 'Fish L3B';
+    const uniqueId = Date.now().toString().slice(-6);
+    this.levelOneName = `Kitchen${uniqueId}`;
+    this.levelTwoName = `Seafood${uniqueId}`;
+    this.levelThreeName = `Prawn${uniqueId}`;
+  }
+
+  async selectDropdownOption(index, optionName) {
+    const combobox = this.page.getByRole('combobox').nth(index);
+    await combobox.click();
+    await combobox.fill(optionName);
+    await this.page.getByText(optionName, { exact: true }).click();
   }
 
   async openOnlineCategory() {
@@ -19,6 +27,8 @@ class OnlineCategoryPage {
     await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).fill('abc');
     await this.page.getByRole('button', { name: 'Save' }).click();
+    await this.page.getByText(this.levelOneName, { exact: true }).waitFor();
+    await this.page.getByRole('button', { name: '+ New' }).nth(1).waitFor();
   }
 
   // async createLevelTwoCategory() {
@@ -36,8 +46,10 @@ class OnlineCategoryPage {
 
   async createLevelTwoCategory() {
     await this.page.getByRole('button', { name: '+ New' }).nth(1).click();
-
-    await this.page.getByRole('combobox').first().click();
+    await this.page.reload({ waitUntil: 'load' });
+    const mainCategoryDropdown = this.page.getByRole('combobox').first();
+    await mainCategoryDropdown.click();
+    await mainCategoryDropdown.fill(this.levelOneName);
     await this.page.getByText(this.levelOneName, { exact: true }).click();
 
     await this.page.getByRole('textbox', { name: 'Enter Level 2 name...' }).click();
@@ -47,14 +59,14 @@ class OnlineCategoryPage {
     await this.page.getByRole('textbox', { name: 'Enter Level 2 description...' }).fill('dc');
 
     await this.page.getByRole('button', { name: 'Save' }).click();
+    await this.page.getByRole('button', { name: '+ New' }).nth(2).waitFor();
   }
 
   async createLevelThreeCategory() {
     await this.page.getByRole('button', { name: '+ New' }).nth(2).click();
-    await this.page.getByRole('combobox').first().click();
-    await this.page.getByText(this.levelOneName, { exact: true }).click();
-    await this.page.getByRole('combobox').nth(1).click();
-    await this.page.getByText(this.levelTwoName, { exact: true }).click();
+    await this.page.reload({ waitUntil: 'load' });
+    await this.selectDropdownOption(0, this.levelOneName);
+    await this.selectDropdownOption(1, this.levelTwoName);
     await this.page.getByRole('textbox', { name: 'Enter level 3 name...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter level 3 name...' }).fill(this.levelThreeName);
     await this.page.getByRole('textbox', { name: 'Enter level 3 desc...' }).click();
