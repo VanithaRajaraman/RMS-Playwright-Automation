@@ -3,8 +3,11 @@ const { ProductCreationPage } = require('../pages/Product/ProductCreationPage');
 const { DepartmentCreationPage } = require('../pages/Product/DepartmentCreationPage');
 const { OnlineCategoryPage } = require('../pages/Product/OnlineCategoryPage');
 const {BrandPage} = require('../pages/Product/BrandPage');
-const { PurchasePage } = require('../pages/PurchasePage');
-const { DirectGRN } = require('../pages/DirectGRN');
+const { PurchasePage } = require('../pages/Purchase/PurchasePage');
+const { DirectGRN } = require('../pages/Purchase/DirectGRN');
+const { CustomerPage } = require('../pages/Sales/CustomerPage');
+const { SalesOrder } = require('../pages/Sales/SalesOrder');
+const { SalesReturn } = require('../pages/Sales/SalesReturn');
 
 exports.test = base.test.extend({
   // Navigate to dashboard once for each test
@@ -41,6 +44,21 @@ exports.test = base.test.extend({
   directGRN: async ({ page }, use) => {
     const directGRN = new DirectGRN(page);
     await use(directGRN);
+  },
+
+  customerPage: async ({ page }, use) => {
+    const customerPage = new CustomerPage(page);
+    await use(customerPage);
+  },
+
+  salesOrder: async ({ page }, use) => {
+    const salesOrder = new SalesOrder(page);
+    await use(salesOrder);
+  },
+
+  salesReturn: async ({ page }, use) => {
+    const salesReturn = new SalesReturn(page);
+    await use(salesReturn);
   }
 });
 

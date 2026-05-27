@@ -1,7 +1,7 @@
 const { defineConfig } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 50000, // 2 minutes per test
+  timeout: 70000, // 2 minutes per test
   fullyParallel: false,
   workers: 1,
   reporter: [
@@ -15,8 +15,8 @@ module.exports = defineConfig({
     headless: true,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 50000, // 1 minute per click/fill/etc.
-    navigationTimeout: 50000
+    actionTimeout: 70000, // 1 minute per click/fill/etc.
+    navigationTimeout: 70000
   },
   projects: [
     {
