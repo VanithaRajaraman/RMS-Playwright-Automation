@@ -1,11 +1,14 @@
+const { getTestData } = require('../../../config/testData');
+
 class DepartmentCreationPage {
   constructor(page) {
     this.page = page;
+    this.data = getTestData('grocery').department;
     const uniqueId = Date.now().toString().slice(-6);
-    this.departmentName = `PAT${uniqueId}`;
+    this.departmentName = `${this.data.namePrefix}${uniqueId}`;
     this.departmentCode = uniqueId;
-    this.subDepartmentName = `Test Sub${uniqueId}`;
-    this.subDepartmentDesc = `Test Subd${uniqueId}`;
+    this.subDepartmentName = `${this.data.subDepartmentNamePrefix}${uniqueId}`;
+    this.subDepartmentDesc = `${this.data.subDepartmentDesc}${uniqueId}`;
     this.subDepartmentCode = uniqueId.slice(-4);
   }
 
@@ -20,7 +23,7 @@ class DepartmentCreationPage {
     await this.page.getByRole('textbox', { name: 'Enter Department name...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter Department name...' }).fill(this.departmentName);
     await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).click();
-    await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).fill('cc');
+    await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).fill(this.data.desc);
     await this.page.getByRole('textbox', { name: 'Enter Department code...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter Department code...' }).fill(this.departmentCode);
     await this.page.getByRole('button', { name: 'Save' }).click();
