@@ -1,13 +1,14 @@
 const base = require('@playwright/test');
-const { ProductCreationPage } = require('../pages/Product/ProductCreationPage');
-const { DepartmentCreationPage } = require('../pages/Product/DepartmentCreationPage');
-const { OnlineCategoryPage } = require('../pages/Product/OnlineCategoryPage');
-const {BrandPage} = require('../pages/Product/BrandPage');
-const { PurchasePage } = require('../pages/Purchase/PurchasePage');
-const { DirectGRN } = require('../pages/Purchase/DirectGRN');
-const { CustomerPage } = require('../pages/Sales/CustomerPage');
-const { SalesOrder } = require('../pages/Sales/SalesOrder');
-const { SalesReturn } = require('../pages/Sales/SalesReturn');
+const { ProductCreationPage } = require('../pages/grocery/products/ProductCreationPage');
+const { DepartmentCreationPage } = require('../pages/grocery/products/DepartmentPage');
+const { OnlineCategoryPage } = require('../pages/grocery/products/OnlineCategoryPage');
+const { BrandPage } = require('../pages/grocery/products/BrandPage');
+const { PurchasePage } = require('../pages/grocery/purchase/PurchasePage');
+const { DirectGRN } = require('../pages/grocery/purchase/DirectGRNPage');
+const { CustomerPage } = require('../pages/grocery/sales/CustomerPage');
+const { SalesOrder } = require('../pages/grocery/sales/SalesOrderPage');
+const { SalesReturn } = require('../pages/grocery/sales/SalesReturnPage');
+const { CategoryPage } = require('../pages/restaurant/products/CategoryPage');
 
 exports.test = base.test.extend({
   // Navigate to dashboard once for each test

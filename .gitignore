@@ -1,4 +1,6 @@
+auth/auth.json
+auth/grocery.auth.json
+auth/restaurant.auth.json
 node_modules/
-auth/
 playwright-report/
 test-results/

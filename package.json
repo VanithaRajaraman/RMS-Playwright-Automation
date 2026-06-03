@@ -4,15 +4,21 @@
   "private": true,
   "description": "Playwright automation framework for ERP workflows such as products, purchase, sales, and inventory.",
   "scripts": {
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "test:products": "playwright test tests/products",    
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "grocery:upcoming": "cross-env BASE_URL=https://upcoming-stage.palletnow.co APP_ENV=upcoming npx playwright test --project=grocery-setup --project=grocery",
+    "grocery:stage": "cross-env BASE_URL=https://stage.palletnow.co          APP_ENV=stage    npx playwright test --project=grocery-setup --project=grocery",
+    "grocery:prod": "cross-env BASE_URL=https://app.palletnow.co            APP_ENV=prod     npx playwright test --project=grocery-setup --project=grocery",
+    "restaurant:upcoming": "cross-env BASE_URL=https://upcoming-stage.palletnow.co APP_ENV=upcoming npx playwright test --project=restaurant-setup --project=restaurant",
+    "restaurant:stage": "cross-env BASE_URL=https://stage.palletnow.co          APP_ENV=stage    npx playwright test --project=restaurant-setup --project=restaurant",
+    "restaurant:prod": "cross-env BASE_URL=https://app.palletnow.co            APP_ENV=prod     npx playwright test --project=restaurant-setup --project=restaurant",
+    "all:upcoming": "cross-env BASE_URL=https://upcoming-stage.palletnow.co APP_ENV=upcoming npx playwright test",
+    "all:stage": "cross-env BASE_URL=https://stage.palletnow.co          APP_ENV=stage    npx playwright test",
+    "all:prod": "cross-env BASE_URL=https://app.palletnow.co            APP_ENV=prod     npx playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.8.0",
+    "cross-env": "^7.0.3",
     "typescript": "^5.8.3"
   },
   "main": "playwright.config.js",

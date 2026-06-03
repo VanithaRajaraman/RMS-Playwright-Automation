@@ -1,0 +1,1 @@
+// Restaurant purchase test placeholder.
