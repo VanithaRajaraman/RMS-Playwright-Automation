@@ -13,6 +13,9 @@ class DepartmentCreationPage {
   }
 
   async openDepartmentMaster() {
+    // Dismiss any initial SweetAlert on page load if present
+    await this.page.locator('.swal2-confirm').click({ timeout: 1000 }).catch(() => {});
+
     await this.page.getByTitle('Products').locator('path').click();
     await this.page.getByText('Masters').click();
     await this.page.getByRole('button', { name: 'Department' }).click();
@@ -27,30 +30,28 @@ class DepartmentCreationPage {
     await this.page.getByRole('textbox', { name: 'Enter Department code...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter Department code...' }).fill(this.departmentCode);
     await this.page.getByRole('button', { name: 'Save' }).click();
+    // Dismiss SweetAlert confirmation if it appears
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
   }
 
   async createSubDepartment() {
     await this.page.getByText('Sub-department').click();
     await this.page.locator('#scheduleYes').nth(1).check();
     await this.page.getByRole('button', { name: 'New' }).click();
-    await this.page.reload({ waitUntil: 'load' });
-    // await this.page.locator('.css-8mmkcg').click();     
-    // await this.page.getByText('PAT1', { exact: true }).click();  
+    await this.page.waitForTimeout(2000); // Wait for DB sync and component hydration
     await this.page.getByRole('combobox').click();
     await this.page.getByRole('combobox').fill(this.departmentName);
     await this.page.getByText(this.departmentName, { exact: true }).click();
-    await this.page.getByRole('combobox').nth(0).click();
      
-await this.page.getByText('Local', { exact: true }).click();
- 
-        await this.page.getByRole('textbox', { name: 'Enter sub-department name....' }).click();
+    await this.page.getByRole('textbox', { name: 'Enter sub-department name....' }).click();
     await this.page.getByRole('textbox', { name: 'Enter sub-department name....' }).fill(this.subDepartmentName);
     await this.page.getByRole('textbox', { name: 'Enter sub-department desc...' }).click();
-    await this.page.getByRole('textbox', { name: 'Enter sub-department name....' }).fill(this.subDepartmentName);
     await this.page.getByRole('textbox', { name: 'Enter sub-department desc...' }).fill(this.subDepartmentDesc);
     await this.page.getByRole('textbox', { name: 'Enter sub-department code...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter sub-department code...' }).fill(this.subDepartmentCode);
     await this.page.getByRole('button', { name: 'Save' }).click();
+    // Dismiss SweetAlert confirmation if it appears
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
   }
 
   async createDepartmentAndSubDepartment() {

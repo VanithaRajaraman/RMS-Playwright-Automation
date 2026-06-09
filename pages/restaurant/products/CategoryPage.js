@@ -14,9 +14,9 @@ class CategoryPage {
     await this.page.getByTitle('Products').locator('svg').click();
     await this.page.getByText('Masters').click();
     await this.page.getByRole('button', { name: 'Online Category' }).click({ force: true });
-    
+
     // Wait for page network requests to settle
-    await this.page.waitForLoadState('networkidle').catch(() => {});
+    await this.page.waitForLoadState('networkidle').catch(() => { });
 
     await this.page.getByRole('button', { name: '+ New' }).first().click({ force: true });
     await this.page.getByRole('textbox', { name: 'Enter category name...' }).fill(categoryName);
@@ -30,12 +30,12 @@ class CategoryPage {
     await this.page.getByText(categoryName, { exact: true }).waitFor();
 
     await this.page.getByRole('button', { name: '+ New' }).nth(1).click();
-    
+
     // Reload page to refresh the category options in the dropdown list
     await this.page.reload({ waitUntil: 'load' });
 
     // Select the main category using search combobox within the select category container
-    const mainCategoryDropdown = this.page.locator('.select-box-category').getByRole('combobox');
+    const mainCategoryDropdown = this.page.getByRole('combobox').first();
     await mainCategoryDropdown.click();
     await mainCategoryDropdown.fill(categoryName);
     await this.page.getByText(categoryName, { exact: true }).click();

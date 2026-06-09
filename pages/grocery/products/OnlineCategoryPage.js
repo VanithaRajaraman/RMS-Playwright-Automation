@@ -15,6 +15,9 @@ class OnlineCategoryPage {
   }
 
   async openOnlineCategory() {
+    // Dismiss any initial SweetAlert on page load if present
+    await this.page.locator('.swal2-confirm').click({ timeout: 1000 }).catch(() => {});
+
     await this.page.getByTitle('Products').locator('path').click();
     await this.page.getByText('Masters').click();
     await this.page.getByRole('button', { name: 'Online Category' }).click();
@@ -27,6 +30,8 @@ class OnlineCategoryPage {
     await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter Department desc...' }).fill('abc');
     await this.page.getByRole('button', { name: 'Save' }).click();
+    // Dismiss SweetAlert confirmation if it appears
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
     await this.page.getByText(this.levelOneName, { exact: true }).waitFor();
     await this.page.getByRole('button', { name: '+ New' }).nth(1).waitFor();
   }
@@ -46,7 +51,7 @@ class OnlineCategoryPage {
 
   async createLevelTwoCategory() {
     await this.page.getByRole('button', { name: '+ New' }).nth(1).click();
-    await this.page.reload({ waitUntil: 'load' });
+    await this.page.waitForTimeout(2000); // Wait for DB sync and component hydration
     const mainCategoryDropdown = this.page.getByRole('combobox').first();
     await mainCategoryDropdown.click();
     await mainCategoryDropdown.fill(this.levelOneName);
@@ -59,12 +64,14 @@ class OnlineCategoryPage {
     await this.page.getByRole('textbox', { name: 'Enter Level 2 description...' }).fill('dc');
 
     await this.page.getByRole('button', { name: 'Save' }).click();
+    // Dismiss SweetAlert confirmation if it appears
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
     await this.page.getByRole('button', { name: '+ New' }).nth(2).waitFor();
   }
 
   async createLevelThreeCategory() {
     await this.page.getByRole('button', { name: '+ New' }).nth(2).click();
-    await this.page.reload({ waitUntil: 'load' });
+    await this.page.waitForTimeout(2000); // Wait for DB sync and component hydration
     await this.selectDropdownOption(0, this.levelOneName);
     await this.selectDropdownOption(1, this.levelTwoName);
     await this.page.getByRole('textbox', { name: 'Enter level 3 name...' }).click();
@@ -72,6 +79,8 @@ class OnlineCategoryPage {
     await this.page.getByRole('textbox', { name: 'Enter level 3 desc...' }).click();
     await this.page.getByRole('textbox', { name: 'Enter level 3 desc...' }).fill('vvfv');
     await this.page.getByRole('button', { name: 'Save' }).click();
+    // Dismiss SweetAlert confirmation if it appears
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
   }
 
   async createOnlineCategory() {
