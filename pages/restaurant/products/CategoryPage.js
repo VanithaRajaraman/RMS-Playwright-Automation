@@ -30,9 +30,7 @@ class CategoryPage {
     await this.page.getByText(categoryName, { exact: true }).waitFor();
 
     await this.page.getByRole('button', { name: '+ New' }).nth(1).click();
-
-    // Reload page to refresh the category options in the dropdown list
-    await this.page.reload({ waitUntil: 'load' });
+    await this.page.waitForTimeout(2000); // Wait for API calls and component hydration
 
     // Select the main category using search combobox within the select category container
     const mainCategoryDropdown = this.page.getByRole('combobox').first();

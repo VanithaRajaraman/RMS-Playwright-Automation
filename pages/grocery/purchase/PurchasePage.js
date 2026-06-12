@@ -96,6 +96,7 @@ class PurchasePage {
     // Invoice amount
     await this.page.getByRole('spinbutton').first().click();
     await this.page.getByRole('spinbutton').first().fill(this.data.grnInvoiceAmount);
+    await this.page.getByRole('spinbutton').first().blur();
 
     // Select buyer
     await this.page.getByText('Select...').click();
@@ -104,6 +105,7 @@ class PurchasePage {
     // Invoice number
     await this.page.getByRole('textbox').nth(3).click();
     await this.page.getByRole('textbox').nth(3).fill(this.data.invoiceNumber);
+    await this.page.getByRole('textbox').nth(3).blur();
 
     // Received quantity
     // await this.page.locator('.MuiInputBase-root.MuiInputBase-colorPrimary.product-aligning.product-not-added > .MuiInputBase-input').click();
@@ -113,8 +115,20 @@ class PurchasePage {
   '#table-body > tr > td:nth-child(8) > .grn-body-row-boxes-1 > .MuiInputBase-root > .MuiInputBase-input'
     );
 
-await receivedQty.click();
+    // Fill MRP to ensure validation passes (since it defaults to 0 when converted from PO)
+    const mrpField = this.page.locator(
+      '#table-body > tr > td:nth-child(7) > .grn-body-row-boxes-1 > .MuiInputBase-root > .MuiInputBase-input'
+    );
+    await mrpField.click({ force: true });
+    await mrpField.fill(this.data.grnInvoiceAmount);
+    await mrpField.blur();
+
+await receivedQty.click({ force: true });
 await receivedQty.fill(this.data.receivedQuantity);
+await receivedQty.blur();
+
+    // Wait for validation states and auto-calculations to settle
+    await this.page.waitForTimeout(2000);
    
     await this.page.getByRole('button', { name: 'Save' }).click();
   }

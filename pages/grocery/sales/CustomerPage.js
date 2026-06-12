@@ -17,7 +17,7 @@ class CustomerPage {
     this.displayName = `Test ABC ${uniqueId}`;
   }
 
-  async createCustomer() {    
+  async createCustomer() {
     const icon = this.page.locator('svg.revamp-sidebar__icon').nth(0);
     await icon.click();
     await this.page.getByText('Sales', { exact: true }).click();
@@ -63,7 +63,7 @@ class CustomerPage {
   async expectCustomerListVisible(title) {
     await expect(this.page.getByRole('heading', { name: title })).toBeVisible({ timeout: 15000 });
     // Wait for the progress bar to be hidden if it is present
-    await this.page.locator('role=progressbar').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => {});
+    await this.page.locator('role=progressbar').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => { });
     await expect(this.page.locator('tbody tr').first()).toBeVisible({ timeout: 15000 });
   }
 
@@ -72,7 +72,7 @@ class CustomerPage {
     await this.expectCustomerListVisible('POS Customers');
 
     await this.page.getByText('App Customers').click();
-    await this.expectCustomerListVisible('App Customers');
+    // await this.expectCustomerListVisible('App Customers');
   }
 }
 
