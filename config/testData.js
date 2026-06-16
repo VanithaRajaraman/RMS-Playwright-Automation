@@ -119,6 +119,33 @@ const restaurantStageUpcoming = {
     totalOrderCapacity: '1000',
     closeStationPercentage: '10',
   },
+  directGrn: {
+    vendor: "Regression Vendor",
+    grnDate: '5',
+    invoiceAmount: '100',
+    buyerSearch: 'va',
+    buyer: 'Vanitha Pallet',
+    invoiceNumber: '1AB',
+    productSearch: 'Honey Jamun',
+    productOption: 'Honey Jamun',
+    quantity: '100',
+    purchasePrice: '100',
+    receivedQuantity: '10',
+  },
+  purchase: {
+    vendor: 'Regression Vendor',
+    buyerSearch: 'va',
+    buyer: 'Vanitha Pallet',
+    assignedUser: 'Vanitha Pallet',
+    indentDate: '27',
+    grnDate: '28',
+    productSearch: 'Honey Jamun',
+    indentProductOption: 'Honey Jamun - Honey Jamun 100 piece',
+    grnInvoiceAmount: '100',
+    invoiceNumber: '1qw',
+    quantity: '100',
+    receivedQuantity: '10',
+  },
 };
 
 const restaurantProd = {

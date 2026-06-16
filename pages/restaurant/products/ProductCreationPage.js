@@ -7,7 +7,9 @@ class ProductCreationPage {
   }
 
   async openProducts() {
-    await this.page.getByTitle('Products').click();
+    // Wait for any initial progress spinner to disappear
+    await this.page.locator('role=progressbar').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => { });
+    await this.page.getByTitle('Products').locator('svg').click();
     await this.page.getByText('All Products').click();
   }
 
@@ -35,23 +37,23 @@ class ProductCreationPage {
     // Toggle "Has Variant"
     await this.page.locator('div:nth-child(5) > .checkbox-wrapper > .checkbox-custom').click();
 
-    // Select Category
-    await this.page.locator('.css-8mmkcg').first().click();
+    // Select Category (Main Menu)
+    const categoryDropdown = this.page.locator('.select-field-container').filter({ hasText: 'Main Menu' }).locator('input.react-select__input');
+    await categoryDropdown.click();
+    await categoryDropdown.fill(categoryName);
     await this.page.locator('.react-select__menu').getByText(categoryName, { exact: true }).click();
 
-    // Select Sub Category
-    await this.page
-      .locator('.react-select__indicator.react-select__dropdown-indicator.css-tlfecz-indicatorContainer > .css-8mmkcg')
-      .first()
-      .click();
+    // Select Sub Category (Sub Menu)
+    const subCategoryDropdown = this.page.locator('.select-field-container').filter({ hasText: 'Sub Menu' }).locator('input.react-select__input');
+    await subCategoryDropdown.click();
+    await subCategoryDropdown.fill(subCategoryName);
     await this.page.locator('.react-select__menu').getByText(subCategoryName, { exact: true }).click();
 
-
-
-
-    // Click the width-140 select box (like prep station or other config dropdown)
-    await this.page.locator('.w-140 > .select-field-container > .select-wrapper > .select-box-category > .react-select__control > .react-select__indicators > .react-select__indicator > .css-8mmkcg').first().click();
-    await this.page.getByText('5%', { exact: true }).click();
+    // Select GST
+    const gstDropdown = this.page.locator('.select-field-container').filter({ hasText: 'GST' }).locator('input.react-select__input');
+    await gstDropdown.click();
+    await gstDropdown.fill('5%');
+    await this.page.locator('.react-select__menu').getByText('5%', { exact: true }).click();
 
 
     // Expand or switch to Item Variant tab/accordion
@@ -78,7 +80,7 @@ class ProductCreationPage {
     await this.page.locator('span.radio-button-custom').nth(0).click();
 
     // Save
-    await this.page.getByRole('button', { name: 'Save' }).click();
+    await this.page.getByRole('button', { name: 'Save' }).click({ force: true });
 
     // Dismiss SweetAlert confirmation if it appears
     await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => { });

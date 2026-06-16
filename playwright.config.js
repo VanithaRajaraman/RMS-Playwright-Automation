@@ -30,6 +30,8 @@ module.exports = defineConfig({
       testMatch: /restaurant\.auth\.setup\.spec\.js/,
     },
 
+
+
     // ── Grocery Tests ────────────────────────────────────
     {
       name: 'grocery',

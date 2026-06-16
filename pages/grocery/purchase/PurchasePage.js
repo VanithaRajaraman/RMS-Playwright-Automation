@@ -53,7 +53,7 @@ class PurchasePage {
       .click();
 
     // Optional SweetAlert confirm (e.g., Open PO exist for this item dialog)
-    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => { });
 
     await this.page.locator('#quantityInput-0').click();
     await this.page.locator('#quantityInput-0').fill(this.data.quantity);
@@ -62,7 +62,7 @@ class PurchasePage {
     await this.page.getByRole('button', { name: 'Save' }).click();
 
     // Optional SweetAlert confirm after save
-    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => {});
+    await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => { });
   }
 
   async approveIndent() {
@@ -112,7 +112,7 @@ class PurchasePage {
     // await this.page.locator('.MuiInputBase-root.MuiInputBase-colorPrimary.Mui-focused > .MuiInputBase-input').fill('10');
     // await this.page.locator('#table-body > tr > td:nth-child(8) > .grn-body-row-boxes-1 > .MuiInputBase-root > .MuiInputBase-input').click();
     const receivedQty = this.page.locator(
-  '#table-body > tr > td:nth-child(8) > .grn-body-row-boxes-1 > .MuiInputBase-root > .MuiInputBase-input'
+      '#table-body > tr > td:nth-child(8) > .grn-body-row-boxes-1 > .MuiInputBase-root > .MuiInputBase-input'
     );
 
     // Fill MRP to ensure validation passes (since it defaults to 0 when converted from PO)
@@ -123,13 +123,13 @@ class PurchasePage {
     await mrpField.fill(this.data.grnInvoiceAmount);
     await mrpField.blur();
 
-await receivedQty.click({ force: true });
-await receivedQty.fill(this.data.receivedQuantity);
-await receivedQty.blur();
+    await receivedQty.click({ force: true });
+    await receivedQty.fill(this.data.receivedQuantity);
+    await receivedQty.blur();
 
     // Wait for validation states and auto-calculations to settle
     await this.page.waitForTimeout(2000);
-   
+
     await this.page.getByRole('button', { name: 'Save' }).click();
   }
 

@@ -42,8 +42,8 @@ class DirectGRN {
     // await this.page.getByRole('option', { name: 'mPOS Product 1 - 100 Grams' }).click();
     const itemRow = this.page.locator('#table-body tr').first();
 
-await itemRow.getByRole('combobox').nth(1).click();
-await itemRow.getByRole('combobox').nth(1).fill(this.data.productSearch);
+    await itemRow.getByRole('combobox').nth(1).click();
+    await itemRow.getByRole('combobox').nth(1).fill(this.data.productSearch);
     await this.page.getByRole('option', { name: this.data.productOption }).click();
 
     await this.page.locator('#quantityInput-0').fill(this.data.quantity);
