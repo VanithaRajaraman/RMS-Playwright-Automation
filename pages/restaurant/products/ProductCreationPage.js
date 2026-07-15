@@ -35,7 +35,7 @@ class ProductCreationPage {
     await this.page.getByText(`➕ Add “${finalMenuName}”`).click();
 
     // Toggle "Has Variant"
-    await this.page.locator('div:nth-child(5) > .checkbox-wrapper > .checkbox-custom').click();
+    await this.page.locator('.checkbox-wrapper').filter({ hasText: 'Menu Item' }).locator('.checkbox-custom').click();
 
     // Select Category (Main Menu)
     const categoryDropdown = this.page.locator('.select-field-container').filter({ hasText: 'Main Menu' }).locator('input.react-select__input');
@@ -79,11 +79,23 @@ class ProductCreationPage {
     await this.page.getByText('Additional Item Attributes', { exact: true }).first().click();
     await this.page.locator('span.radio-button-custom').nth(0).click();
 
+    // Set up the response listener before clicking Save
+    const responsePromise = this.page.waitForResponse(response => 
+      response.url().includes('/proxy/catalog/restaurant/product/create') && 
+      response.request().method() === 'POST'
+    );
+
     // Save
     await this.page.getByRole('button', { name: 'Save' }).click({ force: true });
 
+    // Wait for the response and parse it
+    const response = await responsePromise;
+    const responseBody = await response.json();
+
     // Dismiss SweetAlert confirmation if it appears
     await this.page.locator('.swal2-confirm').click({ timeout: 5000 }).catch(() => { });
+
+    return responseBody;
   }
 
   async openCreatedProduct() {

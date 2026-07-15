@@ -11,6 +11,13 @@ const { SalesReturn } = require('../pages/grocery/sales/SalesReturnPage');
 const { CategoryPage } = require('../pages/restaurant/products/CategoryPage');
 const { PurchasePage: RestaurantPurchasePage } = require('../pages/restaurant/purchase/PurchasePage');
 const { DirectGRN: RestaurantDirectGRN } = require('../pages/restaurant/purchase/GRNPage');
+const { EmployeeCreationPage } = require('../pages/restaurant/workforce/EmployeeCreationPage');
+const { DepartmentCreationPage: RestaurantDepartmentCreationPage } = require('../pages/restaurant/workforce/DepartmentCreationPage');
+const { DesignationCreationPage } = require('../pages/restaurant/workforce/DesignationCreationPage');
+const { LeavesCreationPage } = require('../pages/restaurant/workforce/LeavesCreationPage');
+const { HolidayCreationPage } = require('../pages/restaurant/workforce/HolidayCreationPage');
+const { ShiftMasterPage } = require('../pages/restaurant/workforce/ShiftMasterPage');
+const { ShiftSchedulerPage } = require('../pages/restaurant/workforce/ShiftSchedulerPage');
 const TENANTS = require('../config/tenants');
 
 function escapeRegExp(value) {
@@ -30,7 +37,7 @@ async function loginAndSaveState(page, isRestaurant, authPath) {
   }
 
   await page.goto('/');
-  await page.getByPlaceholder('Mobile number').fill(process.env.MOBILE_NUMBER || '8531821606');
+  await page.getByPlaceholder('Mobile number').fill(process.env.MOBILE_NUMBER || '2907290729');
   await page.getByRole('button', { name: 'Pin Sign In' }).click();
   await page.getByRole('textbox', { name: 'Enter Pin' }).fill(process.env.LOGIN_PIN || '1111');
   await page.getByRole('button', { name: 'Login' }).click();
@@ -51,16 +58,16 @@ exports.test = base.test.extend({
 
     await page.goto('/dashboards/RETAIL');
 
-    // Wait for network requests to settle and any redirects/modals to render
-    await page.waitForLoadState('networkidle').catch(() => {});
-    await page.waitForTimeout(1000);
+    // Wait 5 seconds for the page, APIs, and auth checks to settle
+    await page.waitForTimeout(5000);
 
     if (
-      page.url().endsWith('/') || 
-      page.url().includes('/login') || 
-      await page.getByPlaceholder('Mobile number').isVisible() || 
+      page.url().endsWith('/') ||
+      page.url().includes('/login') ||
+      await page.getByPlaceholder('Mobile number').isVisible() ||
       await page.getByText('Unauthorized Access').isVisible() ||
-      await page.getByText('Reason:').isVisible()
+      await page.getByText('Reason:').isVisible() ||
+      await page.locator('.swal2-container').isVisible()
     ) {
       console.log(`\n⚠️ Session invalid or overwritten for project [${testInfo.project.name}]. Performing auto-login...`);
       await loginAndSaveState(page, isRestaurant, authPath);
@@ -117,6 +124,41 @@ exports.test = base.test.extend({
   salesReturn: async ({ page }, use) => {
     const salesReturn = new SalesReturn(page);
     await use(salesReturn);
+  },
+
+  employeeCreationPage: async ({ page }, use) => {
+    const employeeCreationPage = new EmployeeCreationPage(page);
+    await use(employeeCreationPage);
+  },
+
+  departmentCreationPage: async ({ page }, use) => {
+    const departmentCreationPage = new RestaurantDepartmentCreationPage(page);
+    await use(departmentCreationPage);
+  },
+
+  designationCreationPage: async ({ page }, use) => {
+    const designationCreationPage = new DesignationCreationPage(page);
+    await use(designationCreationPage);
+  },
+
+  leavesCreationPage: async ({ page }, use) => {
+    const leavesCreationPage = new LeavesCreationPage(page);
+    await use(leavesCreationPage);
+  },
+
+  holidayCreationPage: async ({ page }, use) => {
+    const holidayCreationPage = new HolidayCreationPage(page);
+    await use(holidayCreationPage);
+  },
+
+  shiftMasterPage: async ({ page }, use) => {
+    const shiftMasterPage = new ShiftMasterPage(page);
+    await use(shiftMasterPage);
+  },
+
+  shiftSchedulerPage: async ({ page }, use) => {
+    const shiftSchedulerPage = new ShiftSchedulerPage(page);
+    await use(shiftSchedulerPage);
   }
 });
 

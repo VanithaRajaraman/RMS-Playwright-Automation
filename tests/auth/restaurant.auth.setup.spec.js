@@ -18,7 +18,7 @@ function optionalAtText(value) {
 
 test('login once', async ({ page }) => {
   await page.goto('/');
-  await page.getByPlaceholder('Mobile number').fill(process.env.MOBILE_NUMBER || '8531821606');
+  await page.getByPlaceholder('Mobile number').fill(process.env.MOBILE_NUMBER || '2907290729');
   await page.getByRole('button', { name: 'Pin Sign In' }).click();
   await page.getByRole('textbox', { name: 'Enter Pin' }).fill(process.env.LOGIN_PIN || '1111');
   await page.getByRole('button', { name: 'Login' }).click();
